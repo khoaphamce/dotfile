@@ -1,6 +1,13 @@
 :tnoremap <Esc> <C-\><C-n>
 :set number
 :set autoindent
+:set clipboard+=unnamedplus
+set expandtab
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
+
+let g:indent_guides_enable_on_vim_startup = 1
 
 let mapleader = " "
 
@@ -29,6 +36,9 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'https://github.com/adi/vim-indent-rainbow'
 Plug 'yggdroot/indentline'
+Plug 'BurntSushi/ripgrep'
+Plug 'sharkdp/fd'
+Plug 'nathanaelkane/vim-indent-guides'
 
 " For vsnip users.
 Plug 'hrsh7th/cmp-vsnip'
@@ -38,11 +48,30 @@ call plug#end()
 
 let g:syntastic_cpp_check_header = 1
 let g:syntastic_c_check_header = 1
+let g:indent_guides_auto_colors = 0
+
+" hi IndentGuidesOdd  guibg=red   ctermbg=3
+" hi IndentGuidesEven guibg=green ctermbg=4
+" let g:indent_color_gui='#ED93E6'
+let g:indent_guides_guide_size = 1
+let g:indent_guides_tab_guides = 1
+let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
+hi IndentGuidesOdd  ctermbg=253
+hi IndentGuidesEven ctermbg=255
+
 
 
 "if !exists("no_plugin_maps") && if !hasmapto('<Plug>ToggleRainbow')
 "    call togglerb#map("<F8>")
 "
+" Telescope
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+" rainbow indent
+call togglerb#map("<F9>")
 
 lua << EOF
 
@@ -111,15 +140,23 @@ lua << EOF
   -- Setup lspconfig.
   local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
   -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-  require('lspconfig').pyright.setup {
-    capabilities = capabilities
-  }
-  require('lspconfig').dockerls.setup {
-    capabilities = capabilities
-  }
-  require('lspconfig').clangd.setup {
-    capabilities = capabilities
-  }
+  --require('lspconfig').pyright.setup {
+  --  capabilities = capabilities
+  --}
+  --require('lspconfig').dockerls.setup {
+  --  capabilities = capabilities
+  --}
+  --require('lspconfig').clangd.setup {
+  --  capabilities = capabilities
+  --}
+
+  local servers = {'clangd', 'dockerls', 'pyright'}
+	for _, lsp in pairs(servers) do
+  		require('lspconfig')[lsp].setup {
+    			capabilities = capabilities,
+    			on_attach = on_attach,
+  		}
+	end
 
 
 --  local lsp_configs = require('lspconfig.configs')
