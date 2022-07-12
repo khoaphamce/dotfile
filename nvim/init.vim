@@ -39,6 +39,9 @@ Plug 'yggdroot/indentline'
 Plug 'BurntSushi/ripgrep'
 Plug 'sharkdp/fd'
 Plug 'nathanaelkane/vim-indent-guides'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'yuezk/vim-js'
+Plug 'maxmellon/vim-jsx-pretty'
 
 " For vsnip users.
 Plug 'hrsh7th/cmp-vsnip'
@@ -69,6 +72,7 @@ nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+nnoremap <leader>fs <cmd>Telescope lsp_document_symbols<cr>
 
 " rainbow indent
 call togglerb#map("<F9>")
@@ -150,13 +154,13 @@ lua << EOF
   --  capabilities = capabilities
   --}
 
-  local servers = {'clangd', 'dockerls', 'pyright'}
-	for _, lsp in pairs(servers) do
-  		require('lspconfig')[lsp].setup {
-    			capabilities = capabilities,
-    			on_attach = on_attach,
-  		}
-	end
+  local servers = {'clangd', 'dockerls', 'pyright', 'cssls', 'html', 'quick_lint_js', 'eslint', 'tsserver'}
+    for _, lsp in pairs(servers) do
+        require('lspconfig')[lsp].setup {
+                capabilities = capabilities,
+                on_attach = on_attach,
+        }
+    end
 
 
 --  local lsp_configs = require('lspconfig.configs')
