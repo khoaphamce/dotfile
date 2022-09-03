@@ -1,3 +1,4 @@
+let g:suda_smart_edit = 1
 :tnoremap <Esc> <C-\><C-n>
 :set number
 :set autoindent
@@ -9,6 +10,10 @@ set tabstop=4
 
 let g:indent_guides_enable_on_vim_startup = 1
 
+let g:lightline = {
+            \   'colorscheme': 'ayu_dark'
+            \}
+
 let mapleader = " "
 
 call plug#begin()
@@ -18,7 +23,9 @@ Plug 'https://github.com/preservim/nerdtree'
 Plug 'https://github.com/Townk/vim-autoclose'
 Plug 'https://github.com/dense-analysis/ale'
 Plug 'vim-syntastic/syntastic'
-Plug 'https://github.com/vim-airline/vim-airline'
+
+Plug 'itchyny/lightline.vim'
+
 Plug 'https://github.com/tpope/vim-surround'
 Plug 'https://github.com/kien/ctrlp.vim'
 Plug 'https://github.com/nvim-telescope/telescope.nvim'
@@ -43,11 +50,20 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'yuezk/vim-js'
 Plug 'maxmellon/vim-jsx-pretty'
 
+Plug 'https://github.com/octol/vim-cpp-enhanced-highlight'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'kyazdani42/nvim-tree.lua'
+
+
 " For vsnip users.
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
 
 call plug#end()
+
+
+" Vim ariline theme
+let g:airline_theme='lighthaus'
 
 let g:syntastic_cpp_check_header = 1
 let g:syntastic_c_check_header = 1
@@ -74,10 +90,41 @@ nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 nnoremap <leader>fs <cmd>Telescope lsp_document_symbols<cr>
 
+"nvim tree
+nnoremap <C-b> <cmd>NvimTreeToggle<cr>
+nnoremap <C-n> <cmd>NvimTreeFocus<cr>
+
+
+
 " rainbow indent
 call togglerb#map("<F9>")
 
 lua << EOF
+
+-- Setup nvim tree
+-- examples for your init.lua
+
+-- empty setup using defaults
+require("nvim-tree").setup()
+
+-- OR setup with some options
+require("nvim-tree").setup({
+  sort_by = "case_sensitive",
+  view = {
+    adaptive_size = true,
+    mappings = {
+      list = {
+        { key = "u", action = "dir_up" },
+      },
+    },
+  },
+  renderer = {
+    group_empty = true,
+  },
+  filters = {
+    dotfiles = true,
+  },
+})
 
 -- Setup nvim-cmp.
   local cmp = require'cmp'
