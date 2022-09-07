@@ -10,21 +10,22 @@ set tabstop=4
 
 let g:indent_guides_enable_on_vim_startup = 1
 
-let g:lightline = {
-            \   'colorscheme': 'ayu_dark'
-            \}
+set mouse=a
 
 let mapleader = " "
 
 call plug#begin()
 
 Plug 'https://github.com/frazrepo/vim-rainbow'
-Plug 'https://github.com/preservim/nerdtree'
+Plug 'nvim-lualine/lualine.nvim'
 Plug 'https://github.com/Townk/vim-autoclose'
 Plug 'https://github.com/dense-analysis/ale'
 Plug 'vim-syntastic/syntastic'
 
-Plug 'itchyny/lightline.vim'
+Plug 'mhinz/vim-signify'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
+Plug 'junegunn/gv.vim'
 
 Plug 'https://github.com/tpope/vim-surround'
 Plug 'https://github.com/kien/ctrlp.vim'
@@ -46,7 +47,7 @@ Plug 'yggdroot/indentline'
 Plug 'BurntSushi/ripgrep'
 Plug 'sharkdp/fd'
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 Plug 'yuezk/vim-js'
 Plug 'maxmellon/vim-jsx-pretty'
 
@@ -225,4 +226,13 @@ require("nvim-tree").setup({
 
 
   -- Use your attach function here
+
+-- lualine
+
+require("lualine").setup(
+{
+    options = {theme = "modus-vivendi"}
+}
+)
+
 EOF
