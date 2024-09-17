@@ -17,7 +17,12 @@ launch_bar() {
 	elif [[ "$style" == "pwidgets" ]]; then
 		bash "$dir"/pwidgets/launch.sh --main
 	else
-		polybar -q main -c "$dir/$style/config.ini" &	
+        if type "xrandr"; then
+            for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
+                #MONITOR=$m polybar --reload mybar &
+                MONITOR=$m polybar -q main -c "$dir/$style/config.ini" &	
+            done
+        fi
 	fi
 }
 
@@ -61,6 +66,14 @@ elif [[ "$1" == "--forest" ]]; then
 	style="forest"
 	launch_bar
 
+elif [[ "$1" == "--pwidgets" ]]; then
+	style="pwidgets"
+	launch_bar
+
+elif [[ "$1" == "--panels" ]]; then
+	style="panels"
+	launch_bar
+
 else
 	cat <<- EOF
 	Usage : launch.sh --theme
@@ -68,6 +81,6 @@ else
 	Available Themes :
 	--blocks    --colorblocks    --cuts      --docky
 	--forest    --grayblocks     --hack      --material
-	--shades    --shapes
+	--panels    --pwidgets       --shades    --shapes
 	EOF
 fi

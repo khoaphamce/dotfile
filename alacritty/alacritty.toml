@@ -1,0 +1,31 @@
+#[class]
+#general = "Alacritty"
+#instance = "Alacritty"
+
+[font]
+size = 10
+
+[font.normal]
+family = "MesloLGS NF"
+
+#[font.bold]
+#family = "MesloLGS NF"
+#style = "Bold"
+
+#[font.italic]
+#family = "MesloLGS NF"
+#style = "Italic"
+
+#[font.normal]
+#family = "MesloLGS NF"
+#style = "Regular"
+
+[scrolling]
+history = 5000
+
+[window]
+dynamic_title = true
+
+[window.padding]
+x = 10
+y = 0

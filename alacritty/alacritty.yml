@@ -27,8 +27,4 @@ font:
     family: MesloLGS NF
     style: Italic
 
-  size: 14
-
-import:
-  - ~/.alacritty-colorscheme/themes/darcula.yaml
-
+  size: 11
